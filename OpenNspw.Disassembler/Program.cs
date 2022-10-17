@@ -120,15 +120,14 @@ class Program
 			var template = $$"""
 				using Aigamo.Enzan;
 
-				namespace OpenNspw.Interop.Subroutines
+				namespace OpenNspw.Interop.Subroutines;
+
+				// {{subroutine.Name}}
+				internal static class Sub{{subroutine.Start:X}}
 				{
-					// {{subroutine.Name}}
-					internal static class Sub{{subroutine.Start:X}}
+					public static void Call(Emulator emulator)
 					{
-						public static void Call(Emulator emulator)
-						{
-				{{string.Join('\n', builder.ToString().Split('\n').Select(l => $"\t\t\t{l}"))}}
-						}
+				{{string.Join('\n', builder.ToString().Split('\n').Select(l => $"\t\t{l}"))}}
 					}
 				}
 				""";
