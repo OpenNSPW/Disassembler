@@ -82,13 +82,19 @@ internal sealed class Disassembler
 				throw new NotImplementedException($"{opcode:X2}");
 		}
 
-		var token = new Token(_reader, instruction.HasModRM ? new AddressingMode(_reader) : default, _operandSizeOverride, _labels, _parseContext);
-		var factory = instruction.Factories.Count() switch
+		var token = new Token(
+			_reader,
+			mode: instruction.HasModRM ? new AddressingMode(_reader) : default,
+			_operandSizeOverride,
+			_labels,
+			_parseContext
+		);
+		var factory = instruction.Factories.Count switch
 		{
-			1 => instruction.Factories.First(),
+			1 => instruction.Factories[0],
 			_ => instruction.Factories[token.Mode.ModRM.Opcode]
 		};
-		if (factory == null)
+		if (factory is null)
 			throw new NotImplementedException($"{opcode:X2} /{token.Mode.ModRM.Opcode}");
 		_lines.Add(_currentAddress, factory(token).ToArray());
 
