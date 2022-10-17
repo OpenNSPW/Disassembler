@@ -2,6 +2,20 @@ using System.Text;
 
 namespace OpenNspw.Disassembler;
 
+internal static class StringBuilderExtensions
+{
+	public static void AppendLineLF(this StringBuilder builder)
+	{
+		builder.Append('\n');
+	}
+
+	public static void AppendLineLF(this StringBuilder builder, string value)
+	{
+		builder.Append(value);
+		builder.AppendLineLF();
+	}
+}
+
 class Program
 {
 	private static readonly Dictionary<string, Subroutine> _subroutines = new();
@@ -109,12 +123,12 @@ class Program
 			{
 				if (disassembler.Labels.Contains(line.Key))
 				{
-					builder.AppendLine();
-					builder.AppendLine($"loc_{line.Key:X}:");
+					builder.AppendLineLF();
+					builder.AppendLineLF($"loc_{line.Key:X}:");
 				}
 
 				foreach (var l in line.Value)
-					builder.AppendLine($"{l}");
+					builder.AppendLineLF($"{l}");
 			}
 
 			var template = $$"""
