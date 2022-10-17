@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace OpenNspw.Disassembler;
 
 internal sealed class TwoByteInstructions : Dictionary<int, Instruction>

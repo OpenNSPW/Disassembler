@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 namespace OpenNspw.Disassembler;
 
 internal sealed class Instruction
